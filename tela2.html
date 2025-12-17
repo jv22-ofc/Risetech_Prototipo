@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>João Vitor | Portfólio</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #b3b3b3;
+      color: #333;
+      text-align: center;
+    }
+
+    header {
+      background-color: #4b4b4b;
+      color: #fff;
+      padding: 2rem 0;
+    }
+
+    header img {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      margin-bottom: 1rem;
+      object-fit: cover;
+      object-position: top;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2.5rem;
+    }
+
+    header p {
+      margin: 0.5rem 0;
+      font-size: 1.2rem;
+    }
+
+    .intro {
+  position: relative;
+  margin-left: 100px;
+  width: 700px;
+  font-size: 1.1rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  background-color: #fff;
+  
+  /* Espaço interno para o texto */
+  padding: 20px;
+  
+  /* Remove altura fixa para o container se adaptar ao texto */
+  height: auto;
+}
+
+.intro p {
+  font-size: 16px;
+  margin: 0;
+  text-align: justify; /* Deixa o texto alinhado bonito */
+  font-weight: bold;
+}
+
+.h1-intro h1 {
+  margin-right: 900px;
+  margin-top: 80px;
+
+}
+
+
+    /* Carrossel */
+    .carousel {
+      position: relative;
+      height: 100px;
+      width: 700px;
+      margin-left: 1200px;
+      margin-top: 20px;
+      overflow: hidden;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .carousel-track {
+      display: flex;
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .carousel-item {
+      min-width: 100%;
+      padding: 2rem;
+      box-sizing: border-box;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+    .h1-carrossel {
+     margin-left: 1100px;
+     margin-top: 80px;
+
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <img src="img copy/profissional image - Copia.jpg" alt="Foto de João Vitor">
+    <h1>Opa! Me Chamo João Vitor</h1>
+  </header>
+
+
+  <div>
+    <div class="h1-intro">
+      <h1>VENHA ME CONHECER</h1>
+    </div>
+      </div>
+
+  <div class="intro">
+    <p>Minha primeira experiência foi como jovem aprendiz na Stellantis, onde tive a oportunidade de crescer profissionalmente e conquistar uma bolsa para o curso técnico em Mecatrônica. Foi um período de muito aprendizado, que ampliou minha visão sobre tecnologia e inovação.
+
+      Mesmo vindo da área técnica, sempre tive o sonho de seguir carreira em Tecnologia da Informação (TI). Sou movido pela curiosidade e pela vontade constante de aprender, e estou determinado a construir meu futuro na área de TI, buscando sempre evoluir e abraçar novos desafios.</p>
+  </div>
+
+  <div>
+<div class="h1-carrossel">
+  <h1>FORMAÇÃO ACADEMICA</h1>
+</div>
+  </div>
+
+
+  <div class="carousel">
+    <div class="carousel-track">
+      <div class="carousel-item">🎓 Cursando Inteligência Artificial pela Uninassau</div>
+      <div class="carousel-item">🎓 Cursando Tecnologia em sistemas para internet pelo IFPE</div>
+      <div class="carousel-item">💻 Técnico em Desenvolvimento de Sistemas pelo ETE</div>
+      <div class="carousel-item">🤖 Técnico em Mecatrônica pelo SENAI (área complementar)</div>
+    </div>
+  </div>
+
+  <script>
+    const track = document.querySelector('.carousel-track');
+    const items = document.querySelectorAll('.carousel-item');
+    let index = 0;
+
+    function moveCarousel() {
+      index++;
+      if (index >= items.length) {
+        index = 0;
+      }
+      track.style.transform = 'translateX(' + (-index * 100) + '%)';
+    }
+
+    setInterval(moveCarousel, 3000); 
+  </script>
+
+</body>
+</html>

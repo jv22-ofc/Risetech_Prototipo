@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Oficina Mecânica</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background: #f4f4f4;
+      color: #333;
+    }
+
+    header {
+      background: #111;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .hero {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 40px;
+      background: #222;
+      color: #fff;
+      align-items: center;
+    }
+
+    .hero-text {
+      flex: 1;
+      padding: 20px;
+    }
+
+    .hero img {
+  flex: 1;
+  max-width: 300px;   /* controla o tamanho */
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+}
+
+    .sobre {
+      background: #fff;
+      padding: 40px;
+      text-align: center;
+    }
+
+    .container {
+      background: #fff;
+      max-width: 550px;
+      margin: 40px auto;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+
+    label {
+      font-weight: bold;
+      margin-top: 10px;
+      display: block;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    textarea {
+      resize: none;
+    }
+
+    .linha {
+      display: flex;
+      gap: 10px;
+    }
+
+    .linha div {
+      flex: 1;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 20px;
+      padding: 15px;
+      background: #ffcc00;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    footer {
+      background: #111;
+      color: #ccc;
+      text-align: center;
+      padding: 15px;
+      font-size: 13px;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>🔧 Oficina Mecânica Silva</h1>
+  <p>Especialistas em manutenção automotiva</p>
+</header>
+
+<section class="hero">
+  <div class="hero-text">
+    <h2>Seu carro em boas mãos</h2>
+    <p>Diagnóstico preciso, atendimento rápido e sem enrolação.</p>
+  </div>
+  <img src="../img/hero-mecanico.png" alt="Oficina">
+
+</section>
+
+<section class="sobre">
+  <h2>Sobre a Empresa</h2>
+  <p>
+    Atuamos há mais de 10 anos com manutenção preventiva e corretiva,
+    sempre prezando pela transparência e qualidade.
+  </p>
+</section>
+
+<div class="container">
+  <h2>📲 Orçamento Rápido</h2>
+
+  <label>Nome</label>
+  <input type="text" id="nome">
+
+  <label>Marca</label>
+  <select id="marca" onchange="carregarModelos()">
+    <option value="">Selecione</option>
+    <option value="VW">Volkswagen</option>
+    <option value="Fiat">Fiat</option>
+  </select>
+
+  <div class="linha">
+    <div>
+      <label>Modelo</label>
+      <select id="modelo" onchange="carregarVersoes()">
+        <option value="">Selecione a marca</option>
+      </select>
+    </div>
+
+    <div>
+      <label>Ano</label>
+      <input type="number" id="ano" placeholder="Ex: 2009">
+    </div>
+  </div>
+
+  <label>Versão / Motorização</label>
+  <select id="versao">
+    <option value="">Selecione o modelo</option>
+  </select>
+
+  <!-- PROBLEMAS -->
+  <label>Categoria do Problema</label>
+  <select id="categoria" onchange="carregarSubproblemas()">
+    <option value="">Selecione</option>
+    <option value="Eletrica">Elétrica / Eletrônica</option>
+    <option value="Motor">Mecânica do Motor</option>
+    <option value="Suspensao">Suspensão / Direção</option>
+    <option value="Freios">Freios</option>
+    <option value="Transmissao">Transmissão / Embreagem</option>
+    <option value="Ar">Ar-condicionado</option>
+    <option value="Combustivel">Injeção / Combustível</option>
+  </select>
+
+  <label>Problema Específico</label>
+  <select id="subproblema" onchange="mostrarOutroCampo()">
+    <option value="">Selecione a categoria</option>
+  </select>
+
+  <div id="outroCampo" style="display:none;">
+    <label>Descreva o problema</label>
+    <textarea id="outroProblema" placeholder="Descreva o problema"></textarea>
+  </div>
+
+  <label>Urgência</label>
+  <select id="urgencia">
+    <option>Alta</option>
+    <option>Média</option>
+    <option>Baixa</option>
+  </select>
+
+  <button onclick="enviarWhats()">Enviar para WhatsApp</button>
+</div>
+
+<footer>
+  © 2025 Oficina Mecânica Silva
+</footer>
+
+<script>
+  const dados = {
+    VW: {
+      "Gol G3": ["1.0 8v Flex", "1.0 16v", "1.6 Power", "1.6 City"],
+      "Gol G4": ["1.0 8v Flex", "1.6 Flex"]
+    },
+    Fiat: {
+      "Palio Fire": ["1.0 Fire Flex", "1.4 Fire"],
+      "Uno": ["1.0 Fire", "Way 1.0"]
+    }
+  };
+
+  const problemas = {
+    Eletrica: [
+      "Luz da injeção acesa",
+      "Carro não pega",
+      "Bateria descarregando",
+      "Painel apagando",
+      "ABS aceso",
+      "Airbag aceso",
+      "Outros"
+    ],
+    Motor: [
+      "Motor falhando",
+      "Perda de potência",
+      "Vazamento de óleo",
+      "Superaquecimento",
+      "Marcha lenta irregular",
+      "Outros"
+    ],
+    Suspensao: [
+      "Barulho em buracos",
+      "Carro puxando para um lado",
+      "Volante tremendo",
+      "Estalo ao esterçar",
+      "Outros"
+    ],
+    Freios: [
+      "Freio fazendo barulho",
+      "Pedal baixo",
+      "Pedal duro",
+      "Trepidação ao frear",
+      "Outros"
+    ],
+    Transmissao: [
+      "Embreagem patinando",
+      "Marcha não entra",
+      "Marcha arranhando",
+      "Tranco ao trocar marcha",
+      "Outros"
+    ],
+    Ar: [
+      "Não gela",
+      "Gela pouco",
+      "Barulho no compressor",
+      "Mau cheiro",
+      "Outros"
+    ],
+    Combustivel: [
+      "Falhando ao acelerar",
+      "Dificuldade na partida",
+      "Cheiro forte de combustível",
+      "Baixo rendimento",
+      "Outros"
+    ]
+  };
+
+  function carregarModelos() {
+    const marca = document.getElementById("marca").value;
+    const modelo = document.getElementById("modelo");
+    const versao = document.getElementById("versao");
+
+    modelo.innerHTML = "<option>Selecione</option>";
+    versao.innerHTML = "<option>Selecione o modelo</option>";
+
+    if (!marca) return;
+
+    Object.keys(dados[marca]).forEach(m => {
+      const opt = document.createElement("option");
+      opt.value = m;
+      opt.textContent = m;
+      modelo.appendChild(opt);
+    });
+  }
+
+  function carregarVersoes() {
+    const marca = document.getElementById("marca").value;
+    const modelo = document.getElementById("modelo").value;
+    const versao = document.getElementById("versao");
+
+    versao.innerHTML = "<option>Selecione</option>";
+
+    dados[marca][modelo].forEach(v => {
+      const opt = document.createElement("option");
+      opt.value = v;
+      opt.textContent = v;
+      versao.appendChild(opt);
+    });
+  }
+
+  function carregarSubproblemas() {
+    const categoria = document.getElementById("categoria").value;
+    const sub = document.getElementById("subproblema");
+    const outro = document.getElementById("outroCampo");
+
+    sub.innerHTML = "<option>Selecione</option>";
+    outro.style.display = "none";
+
+    problemas[categoria].forEach(p => {
+      const opt = document.createElement("option");
+      opt.value = p;
+      opt.textContent = p;
+      sub.appendChild(opt);
+    });
+  }
+
+  function mostrarOutroCampo() {
+    const sub = document.getElementById("subproblema").value;
+    document.getElementById("outroCampo").style.display =
+      sub === "Outros" ? "block" : "none";
+  }
+
+  function enviarWhats() {
+    const nome = document.getElementById("nome").value;
+    const marca = document.getElementById("marca").value;
+    const modelo = document.getElementById("modelo").value;
+    const versao = document.getElementById("versao").value;
+    const ano = document.getElementById("ano").value;
+    const categoria = document.getElementById("categoria").value;
+    const sub = document.getElementById("subproblema").value;
+    const outro = document.getElementById("outroProblema").value;
+    const urgencia = document.getElementById("urgencia").value;
+
+    const problemaFinal = sub === "Outros" ? outro : sub;
+
+    if (!nome || !marca || !modelo || !versao || !ano || !problemaFinal) {
+      alert("Preencha todos os campos.");
+      return;
+    }
+
+    const msg =
+`Nome: ${nome}
+Veículo: ${marca} ${modelo}
+Versão: ${versao}
+Ano: ${ano}
+Problema: ${categoria} - ${problemaFinal}
+Urgência: ${urgencia}`;
+
+    const numero = "5581984696749"; // troque
+    window.open(`https://wa.me/${numero}?text=${encodeURIComponent(msg)}`, "_blank");
+  }
+</script>
+
+</body>
+</html>
